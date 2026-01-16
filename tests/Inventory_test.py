@@ -18,6 +18,15 @@ def driver():
     yield driver
     driver.quit()
 
+    @pytest.mark.usefixtures("driver")
+    def test_login_with_valid_credentials(self, driver):
+        logger.info("Starting test: valid login")
+        
+
+        # Open login page
+        driver.get("https://www.saucedemo.com")
+
+
 @pytest.fixture
 def login(driver):
     driver.get(get_config("base_url", section="environment"))
