@@ -1,12 +1,11 @@
 import logging
 
-def setup_logger(name="SauceDemo"):
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
-
+def setup_logger():
+    logger = logging.getLogger("SauceDemoLogger")
     if not logger.handlers:
-        ch = logging.StreamHandler()
+        logger.setLevel(logging.INFO)
+        handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        ch.setFormatter(formatter)
-        logger.addHandler(ch)
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
     return logger
