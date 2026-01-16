@@ -1,20 +1,20 @@
-# conftest.py
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from pages.login_page import LoginPage
 
+@pytest.fixture(scope="session")
+def login():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
 
-@pytest.fixture
-def driver():
-    options = Options()
-    options.add_argument("--start-maximized")
+    # Step 1: Open login page
+    driver.get("https://www.saucedemo.com")
 
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options
-    )
+    # Step 2: Login
+    LoginPage(driver).login("standard_user", "secret_sauce")
+
+    # Step 3: Verify navigation to next page
+    assert "inventory" in driver.current_url
 
     yield driver
     driver.quit()
